@@ -1,0 +1,51 @@
+.register {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.register form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register div {
+  margin-bottom: 15px;
+}
+
+.register label {
+  margin-bottom: 5px;
+  display: block;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon svg {
+  position: absolute;
+  left: 10px;
+  color: #777;
+  font-size: 1rem;
+}
+
+.input-with-icon input {
+  width: 90%;
+  padding: 10px 10px 10px 2.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.register button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register button:hover {
+  background-color: #0056b3;
+}

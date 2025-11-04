@@ -1,0 +1,126 @@
+/* 🌟 E-commerce Professional Login Page */
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #e3f2fd, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 420px;
+  margin: auto;
+  padding: 20px;
+  margin-top: 50px;
+}
+
+.login-card {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.login-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+.login-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.3rem;
+}
+
+.login-subtitle {
+  color: #777;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+.login-form {
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 0.4rem;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon svg {
+  position: absolute;
+  left: 10px;
+  color: #777;
+  font-size: 1rem;
+}
+
+.input-with-icon input {
+  width: 90%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.6rem;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: white;
+  color: black;
+}
+
+.form-group input:focus {
+  border-color: #0077ff;
+  box-shadow: 0 0 4px rgba(0, 119, 255, 0.2);
+}
+
+.login-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #0077ff, #00b4d8);
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  font-weight: 600;
+}
+
+.login-btn:hover {
+  background: linear-gradient(90deg, #005ecb, #009bb6);
+  transform: translateY(-2px);
+}
+
+.login-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.login-footer a {
+  color: #0077ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}

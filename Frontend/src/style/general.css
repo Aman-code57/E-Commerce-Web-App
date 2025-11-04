@@ -1,0 +1,12 @@
+.App {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  /* display: 1 1 flex; */
+  width: 1520px;
+  height: 120vh;
+  /* padding: 20px; */
+  background-color: white;
+  color: black;
+}
+
+
