@@ -1,4 +1,3 @@
-/* 🌟 E-commerce Professional Login Page */
 
 body {
   font-family: 'Poppins', sans-serif;
@@ -8,6 +7,7 @@ body {
   justify-content: center;
   min-height: 100vh;
   margin: 0;
+  
 }
 
 .login-container {
@@ -99,8 +99,9 @@ body {
   border: none;
   border-radius: 0.6rem;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: background 0.3as ease, transform 0.2s ease;
   font-weight: 600;
+  margin-top: 5px;
 }
 
 .login-btn:hover {
@@ -123,4 +124,9 @@ body {
 
 .login-footer a:hover {
   text-decoration: underline;
+}
+.error{
+  color: red;
+  font-size: small;
+  position: absolute;
 }

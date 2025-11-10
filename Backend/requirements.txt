@@ -1,0 +1,79 @@
+fastapi==0.104.1
+uvicorn==0.24.0
+sqlalchemy==2.0.23
+pydantic==2.5.0
+pydantic-settings
+python-multipart==0.0.6
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+pymysql
+
+-- 1️⃣ USERS TABLE
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phoneno VARCHAR(15),
+    password_hash VARCHAR(255) NOT NULL,
+    address VARCHAR(255),
+    gender VARCHAR(10),
+    is_admin BOOLEAN DEFAULT FALSE,
+    otp_code VARCHAR(6),
+    otp_expiry DATETIME
+);
+
+-- 2️⃣ CATEGORIES TABLE
+CREATE TABLE categories (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    description VARCHAR(255)
+);
+
+-- 3️⃣ PRODUCTS TABLE
+CREATE TABLE products (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255),
+    price FLOAT NOT NULL,
+    category_id INT,
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+-- 4️⃣ ORDERS TABLE
+CREATE TABLE orders (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    total_amount FLOAT NOT NULL,
+    status VARCHAR(50) DEFAULT 'pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
+-- 5️⃣ ORDER_ITEMS TABLE
+CREATE TABLE order_items (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT,
+    product_id INT,
+    quantity INT NOT NULL,
+    price FLOAT NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+        ON DELETE CASCADE
+);
+
+-- 6️⃣ CART_ITEMS TABLE
+CREATE TABLE cart_items (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    product_id INT,
+    quantity INT NOT NULL,
+    price FLOAT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+        ON DELETE CASCADE
+);

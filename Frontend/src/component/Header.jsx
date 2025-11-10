@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { FaHome, FaShoppingCart, FaSignInAlt, FaUserPlus } from 'react-icons/fa';
 import Sidebar from './Sidebar';
+import logo from '../assets/logo.png';
 import '../style/Header.css';
 
 const Header = () => {
@@ -23,7 +24,7 @@ const Header = () => {
           <span></span>
         </div>
         <div className="logo">
-          <Link to="/">E-Commerce Store</Link>
+          <Link to="/"><img src={logo} alt="ShopWay Logo" />EComMarket</Link>
         </div>
         <nav>
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>

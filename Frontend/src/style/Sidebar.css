@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 300px;
+  width: 230px;
   height: 100vh;
   background-color: #fff;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -60,19 +60,91 @@
   flex-direction: column;
 }
 
-.category-dropdown {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  color: #333;
-  cursor: pointer;
+.custom-dropdown {
+  position: relative;
+  width: 100%;
 }
 
-.category-dropdown:focus {
-  outline: none;
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-header:hover {
   border-color: #007bff;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.15);
+}
+
+.dropdown-icon {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.dropdown-text {
+  flex: 1;
+  font-size: 16px;
+  color: #333;
+  font-weight: 500;
+}
+
+.dropdown-arrow {
+  font-size: 12px;
+  color: #666;
+  transition: transform 0.2s ease;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.dropdown-option {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.dropdown-option:last-child {
+  border-bottom: none;
+}
+
+.dropdown-option:hover {
+  background-color: #f8f9fa;
+}
+
+.dropdown-option.selected {
+  background-color: #e3f2fd;
+  color: #007bff;
+  font-weight: 500;
+}
+
+.option-icon {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.option-text {
+  font-size: 14px;
+  color: inherit;
 }
 
 .sidebar-link {
@@ -81,7 +153,7 @@
   text-decoration: none;
   color: #333;
   padding: 10px 0;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .sidebar-link:hover {
@@ -91,4 +163,11 @@
 .sidebar-link .icon {
   margin-right: 10px;
   font-size: 18px;
+}
+.logout-btn {
+  background-color: lightgrey;
+  color: black;
+  width: 70%;
+  margin-top: 350px;
+  margin-left: 30px;
 }
