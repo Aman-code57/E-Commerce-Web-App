@@ -16,11 +16,11 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const categories = [
     { value: '', label: 'All Categories', icon: '🛍️' },
-    { value: 'clothes', label: 'Clothes', icon: '👕' },
-    { value: 'electronics', label: 'Electronics', icon: '📱' },
-    { value: 'laptop', label: 'Laptop', icon: '💻' },
-    { value: 'mobiles', label: 'Mobiles', icon: '📱' },
-    { value: 'mobileAccessories', label: 'Mobile Accessories', icon: '🔌' },
+    { value: ' fashion,', label: 'Fashion', icon: '👕' },
+    { value: 'Electronics', label: 'Electronics', icon: '🔌📱💻' },
+    { value: 'homegoods', label: 'Home Goods', icon: '🏠🪑🛌' },
+    { value: 'health and beauty', label: 'health and beauty', icon: '🏥💅💄' },
+    { value: 'Accessories', label: 'Accessories', icon: '🔌' },
   ];
 
   const handleCategoryChange = (categoryValue) => {
@@ -117,9 +117,11 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </div>
 
         <div className="sidebar-section">
-          <Link to="/profile" className="sidebar-link">
-            <span className="icon">👤</span> Profile
-          </Link>
+          {token && (
+            <Link to="/profile" className="sidebar-link">
+              <span className="icon">👤</span> Profile
+            </Link>
+          )}
           <Link to="/settings" className="sidebar-link">
             <span className="icon">⚙️</span> Settings
           </Link>

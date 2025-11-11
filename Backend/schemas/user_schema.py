@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
+from datetime import datetime
 
 
 class UserBase(BaseModel):
@@ -17,6 +18,15 @@ class UserCreate(UserBase):
 class UserResponse(UserBase):
     id: int
     is_admin: bool
+
+    class Config:
+        from_attributes = True
+
+
+class UserAdminResponse(UserBase):
+    id: int
+    is_admin: bool
+    created_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
@@ -49,3 +59,9 @@ class ResetPasswordRequest(BaseModel):
     email: EmailStr
     otp: str = Field(..., min_length=6, max_length=6, description="6-digit OTP")
     new_password: str = Field(..., min_length=4, description="New password must be at least 4 characters long")
+
+
+class UpdateUserRequest(BaseModel):
+    name: Optional[str] = None
+    phoneno: Optional[str] = None
+    address: Optional[str] = None

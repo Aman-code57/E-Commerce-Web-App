@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, func
 from database.connection import Base
 
 
@@ -15,3 +15,4 @@ class User(Base):
     is_admin = Column(Boolean, default=False)
     otp_code = Column(String(6), nullable=True)
     otp_expiry = Column(DateTime, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())

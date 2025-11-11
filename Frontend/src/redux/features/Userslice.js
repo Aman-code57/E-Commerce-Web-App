@@ -40,7 +40,7 @@ export const forgotPassword = createAsyncThunk(
     try {
       const response = await api.post("/forgot-password", { email });
 
-      setCookie("reset_email", email, 1); // Store email in cookie for 1 day
+      setCookie("reset_email", email, 1); 
       toast.success("OTP sent to your email!");
       return response.data;
     } catch (error) {
@@ -84,6 +84,34 @@ export const ResetPassword = createAsyncThunk(
   }
 );
 
+// Async thunk for getting current user
+export const getCurrentUser = createAsyncThunk(
+  "user/getCurrentUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get("/me");
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.detail || error.message);
+    }
+  }
+);
+
+// Async thunk for updating user
+export const updateUser = createAsyncThunk(
+  "user/updateUser",
+  async (updateData, { rejectWithValue }) => {
+    try {
+      const response = await api.put("/me", updateData);
+      toast.success("Profile updated successfully!");
+      return response.data;
+    } catch (error) {
+      toast.error(error.response?.data?.detail || "Update failed");
+      return rejectWithValue(error.response?.data?.detail || error.message);
+    }
+  }
+);
+
 
 const userSlice = createSlice({
   name: "user",
@@ -112,7 +140,7 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = action.payload.user;
         state.token = action.payload.access_token;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -161,6 +189,35 @@ const userSlice = createSlice({
         state.loading = false;
       })
       .addCase(ResetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getCurrentUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(getCurrentUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        // If token is invalid, clear it
+        if (action.payload === "Invalid token") {
+          state.token = null;
+          deleteCookie("token");
+        }
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart, increaseQuantity, decreaseQuantity } from '../../redux/features/cartslice';
+import { fetchProducts } from '../../redux/features/productslice';
 import Footer from '../../component/Footer';
 import '../../style/Home.css';
 
 const Home = () => {
-  const { list: allProducts, selectedCategory } = useSelector((state) => state.products);
+  const { list: allProducts, selectedCategory, loading, error } = useSelector((state) => state.products);
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const [showProducts, setShowProducts] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   const filteredProducts = selectedCategory
     ? allProducts.filter(product => product.category === selectedCategory)
@@ -34,6 +39,12 @@ const Home = () => {
 
   const handleStartShopping = () => {
     setShowProducts(true);
+    setTimeout(() => {
+      const featuredSection = document.getElementById('featured-products');
+      if (featuredSection) {
+        featuredSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100); // Small delay to ensure the section is rendered
   };
 
   return (
@@ -49,7 +60,7 @@ const Home = () => {
       </section>
 
       {/* Featured Products Section */}
-      <section className="featured-products">
+      <section id="featured-products" className="featured-products">
         <h2>Featured Products</h2>
         <div className="products-grid">
           {featuredProducts.map((product) => {

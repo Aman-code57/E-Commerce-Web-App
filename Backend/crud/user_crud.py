@@ -177,3 +177,29 @@ def reset_password(db: Session, email: str, new_password: str):
     db.commit()
     db.refresh(user)
     return True
+
+
+def get_user_by_token(db: Session, token: str):
+    from core.security import verify_token
+    payload = verify_token(token)
+    if not payload:
+        return None
+    email = payload.get("sub")
+    if not email:
+        return None
+    return get_user_by_email(db, email)
+
+def get_all_users(db: Session):
+    return db.query(User).all()
+
+
+def update_user(db: Session, user_id: int, update_data):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        return None
+    for key, value in update_data.items():
+        if value is not None:
+            setattr(user, key, value)
+    db.commit()
+    db.refresh(user)
+    return user

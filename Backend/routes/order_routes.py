@@ -4,18 +4,19 @@ from database.connection import get_db
 from crud.order_crud import get_orders, get_order, create_order, update_order_status
 from schemas.order_schema import Order, OrderCreate
 from core.security import verify_token
-from fastapi.security import HTTPBearer
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from crud.user_crud import get_user_by_email
+from crud.order_crud import get_all_orders
 
 router = APIRouter()
 oauth2_scheme = HTTPBearer()
 
 
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    username = verify_token(token)
-    if username is None:
+def get_current_user(token: HTTPAuthorizationCredentials = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    payload = verify_token(token.credentials)
+    if payload is None:
         raise HTTPException(status_code=401, detail="Invalid token")
-    user = get_user_by_email(db, email=username)
+    user = get_user_by_email(db, email=payload.get("sub"))
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return user
@@ -23,7 +24,10 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
 @router.get("/orders", response_model=list[Order])
 def read_orders(current_user=Depends(get_current_user), db: Session = Depends(get_db)):
-    orders = get_orders(db, user_id=current_user.id)
+    if current_user.is_admin:
+        orders = get_all_orders(db)
+    else:
+        orders = get_orders(db, user_id=current_user.id)
     return orders
 
 

@@ -10,7 +10,7 @@ import '../../style/Login.css';
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading } = useSelector((state) => state.user);
+  const { loading, user, token } = useSelector((state) => state.user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -23,6 +23,17 @@ const Login = () => {
       emailRef.current.focus();
     }
   }, []);
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (token && user) {
+      if (user.is_admin) {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
+    }
+  }, [token, user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,7 +57,12 @@ const Login = () => {
 
     const resultAction = await dispatch(loginUser({ email, password }));
     if (loginUser.fulfilled.match(resultAction)) {
-      navigate('/');
+      const user = resultAction.payload.user;
+      if (user.is_admin) {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
     }
   };
 
@@ -131,7 +147,7 @@ const Login = () => {
           </div>
         </form>
       </motion.div>
-
+    
     </motion.div>
   );
 };

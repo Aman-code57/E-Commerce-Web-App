@@ -4,15 +4,15 @@ from database.connection import get_db
 from crud.cart_item_crud import get_cart_items, create_cart_item, update_cart_item, delete_cart_item
 from schemas.cart_item_schema import CartItem, CartItemCreate
 from core.security import verify_token
-from fastapi.security import HTTPBearer
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from crud.user_crud import get_user_by_email
 
 router = APIRouter()
 oauth2_scheme = HTTPBearer()
 
 
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    username = verify_token(token)
+def get_current_user(token: HTTPAuthorizationCredentials = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    username = verify_token(token.credentials)
     if username is None:
         raise HTTPException(status_code=401, detail="Invalid token")
     user = get_user_by_email(db, email=username)

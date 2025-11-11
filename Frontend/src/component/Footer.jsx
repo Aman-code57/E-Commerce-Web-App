@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="footer-left">
           <div className="footer-contact">
             <h4>Contact Us</h4>
-            <p>Email: ecommarket@gmail.com</p>
+            <p>Email: ecommart@gmail.com</p>
             <p>contact: +91-9876543256</p>
           </div>
           <div className="footer-links">
@@ -34,7 +34,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>&copy; 2023 E-Commerce Store. All rights reserved.</p>
+        <p>&copy; 2025 E-Commerce Store. All rights reserved.</p>
       </div>
     </footer>
   );

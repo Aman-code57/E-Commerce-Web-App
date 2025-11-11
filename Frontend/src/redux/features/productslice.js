@@ -1,19 +1,47 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import api from "../../utils/api";
 
-const initialProducts = [
-  { id: 1, name: "T-shirt", price: 499, category: "clothes" },
-  { id: 2, name: "Jeans", price: 999, category: "clothes" },
-  { id: 3, name: "Sneakers", price: 1999, category: "clothes" },
-  {id: 4, name: "mobile", price: 10000, category: "mobiles" },
-];
+export const fetchProducts = createAsyncThunk(
+  "products/fetchProducts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get("/products");
+      const products = response.data.map(product => ({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        category: product.category ? product.category.name : "uncategorized",
+        image: product.image || null,
+      }));
+      return products;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Failed to fetch products");
+    }
+  }
+);
 
 const productSlice = createSlice({
   name: "products",
-  initialState: { list: initialProducts, selectedCategory: "" },
+  initialState: { list: [], selectedCategory: "", loading: false, error: null },
   reducers: {
     setSelectedCategory: (state, action) => {
       state.selectedCategory = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.list = action.payload;
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 

@@ -8,6 +8,10 @@ def get_orders(db: Session, user_id: int):
     return db.query(Order).filter(Order.user_id == user_id).all()
 
 
+def get_all_orders(db: Session):
+    return db.query(Order).all()
+
+
 def get_order(db: Session, order_id: int, user_id: int):
     return db.query(Order).filter(Order.id == order_id, Order.user_id == user_id).first()
 
